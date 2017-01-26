@@ -77,7 +77,9 @@
                             <i class="fa fa-twitter" aria-hidden="true"></i>
                             <a href="{{ path('retweet' , {'id' : message.id }) }}"> Retweet</a>
                             {% endif %}
+                            <i class="fa fa-share" aria-hidden="true"></i>
 
+                            <a href="mailto:?subject=Voici un tweet sympa !&body={{ asset(message.content) }}"> Partager par e-mail</a>
                         </div>
                     </div>
                 {% else %}
