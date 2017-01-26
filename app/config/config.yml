@@ -8,6 +8,8 @@ imports:
 parameters:
     locale: fr
     pictures_directory: '%kernel.root_dir%/../web/uploads/pictures'
+    video_directory: '%kernel.root_dir%/../web/uploads/videos'
+    pdf_directory: '%kernel.root_dir%/../web/uploads/pdf'
 
 framework:
     #esi:             ~

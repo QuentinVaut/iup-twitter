@@ -51,10 +51,23 @@ class MessageController extends Controller
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
             // Move the file to the directory where brochures are stored
-            $file->move(
-                $this->getParameter('pictures_directory'),
-                $fileName
-            );
+            if($file->guessExtension() == 'mp4')
+            {
+                $file->move(
+                    $this->getParameter('video_directory'),
+                    $fileName
+                );
+            }elseif($file->guessExtension() == 'pdf'){
+                $file->move(
+                    $this->getParameter('pdf_directory'),
+                    $fileName
+                );
+            }else{
+                $file->move(
+                    $this->getParameter('pictures_directory'),
+                    $fileName
+                );
+            }
 
             $message->setPicture($fileName);
 
