@@ -24,15 +24,7 @@
             <tr>
                 <th>Picture</th>
                 <td>
-                    {% if message.picture is not empty %}
-                        {% if message.picture|ext == 'mp4' %}
-                            <video width="320" height="180" controls="controls">
-                                <source src="{{ asset('uploads/pictures/' ~ message.picture) }}" type="video/mp4" />
-                            </video>
-                        {% else %}
-                            <img src="{{ asset('uploads/pictures/' ~ message.picture) }}" style="max-width: 256px;" />
-                        {% endif %}
-                    {% endif %}
+                    {{ include("AppBundle:Message:message.html.twig") }}
                 </td>
             </tr>
 

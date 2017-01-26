@@ -49,17 +49,7 @@
                         <div class="panel-body">
                             {{ message.content }}
 
-                            {% if message.picture is not empty %}
-                                {% if message.picture|ext == 'mp4' %}
-                                    <video width="320" height="180" controls="controls">
-                                        <source src="{{ asset('uploads/pictures/' ~ message.picture) }}" type="video/mp4" />
-                                    </video>
-                                {% elseif message.picture|ext == 'pdf' %}
-                                    <a href="{{ asset('uploads/pdf/' ~ message.picture) }}" target="_blank"> <img src="{{ asset('images/pdf.png') }}" style="max-width: 256px;" /></a>
-                                {% else %}
-                                    <img src="{{ asset('uploads/pictures/' ~ message.picture) }}" style="max-width: 256px;" />
-                                {% endif %}
-                            {% endif %}
+                            {{ include("AppBundle:Message:message.html.twig") }}
 
                             {% set statusId = 0 %}
                             {% for status in message.status %}
