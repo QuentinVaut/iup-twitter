@@ -38,8 +38,9 @@
     <div id="wrapper">
         <div id="container">
             <fieldset>
-                <legend>Accueil - {{ messages|length }} message(s)</legend>
-                {% for message in messages %}
+                <legend>Accueil - {{ pagination.getTotalItemCount}} message(s)</legend>
+
+                {% for message in pagination %}
                     <div class="panel panel-default">
                         <div class="panel-heading"> <a href="{{ path('user_message', {'username': message.user.username }) }}">{{ message.user.username }}</a>
                             {% if message.parent is not null %}
@@ -85,6 +86,10 @@
                 {% else %}
                     Aucun message
                 {% endfor %}
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
 
                 {{ form_start(form) }}
                 {{ form_widget(form) }}

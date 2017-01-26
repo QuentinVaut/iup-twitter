@@ -51,13 +51,24 @@ class DefaultController extends Controller
             $em->persist($message);
             $em->flush();
         }
-
+/*
         $messages = $this->getDoctrine()
             ->getRepository('AppBundle:Message')
-            ->findByOrderedByDate();
+            ->findByOrderedByDate();*/
+
+        $em    = $this->get('doctrine.orm.entity_manager');
+        $dql   = "SELECT m FROM AppBundle:Message m";
+        $query = $em->createQuery($dql);
+
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('default/index.html.twig', [
-            'messages' => $messages,
+            'pagination' => $pagination,
             'form' => $form->createView(),
         ]);
     }
