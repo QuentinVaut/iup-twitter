@@ -86,6 +86,11 @@
                     Aucun message
                 {% endfor %}
 
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Create" />
+                {{ form_end(form) }}
+
             </fieldset>
 
 

@@ -16,12 +16,49 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $message = new Message($this->getUser());
+        $form = $this->createForm('AppBundle\Form\MessageType', $message);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+            $file = $message->getPicture();
+
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            if($file->guessExtension() == 'mp4')
+            {
+                $file->move(
+                    $this->getParameter('video_directory'),
+                    $fileName
+                );
+            }elseif($file->guessExtension() == 'pdf'){
+                $file->move(
+                    $this->getParameter('pdf_directory'),
+                    $fileName
+                );
+            }else{
+                $file->move(
+                    $this->getParameter('pictures_directory'),
+                    $fileName
+                );
+            }
+
+            $message->setPicture($fileName);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($message);
+            $em->flush();
+        }
+
         $messages = $this->getDoctrine()
             ->getRepository('AppBundle:Message')
             ->findByOrderedByDate();
 
         return $this->render('default/index.html.twig', [
             'messages' => $messages,
+            'form' => $form->createView(),
         ]);
     }
 
